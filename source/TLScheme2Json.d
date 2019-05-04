@@ -15,17 +15,17 @@ module tlscheme2json;
 enum DEFAULT_TL_URL = "https://raw.githubusercontent.com/tdlib/td/master/td/generate/scheme/td_api.tl";
 
 class TLMethod {
-    string name;
-    string type;
-    string description;
+    string name = "";
+    string type = "";
+    string description = "";
 }
 
 class TLClass {
-    string name;
+    string name = "";
     TLMethod[] methods;
-    string description;
-    string inheritance;
-    string return_type;
+    string description = "";
+    string inheritance = "";
+    string return_type = "";
     bool isFunction;
     bool isSynchronous;
 }
@@ -133,10 +133,10 @@ class TLScheme2Json {
         import std.uni : toLower;
         import std.stdio : writeln;
 
-        string name;
-        string description;
-        string inheritance;
-        string return_type;
+        string name = "";
+        string description = "";
+        string inheritance = "";
+        string return_type = "";
         bool isSynchronous = false;
         TLMethod[] methods;
 
@@ -165,6 +165,7 @@ class TLScheme2Json {
                 methods[i] = new TLMethod();
                 methods[i].name = methodProperties[0];
                 methods[i].type = methodProperties[1];
+                methods[i].description = "";
             }
 
             auto rawreturn = fields[fields.length -1].stripRight(";");
