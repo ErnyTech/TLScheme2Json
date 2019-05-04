@@ -30,6 +30,10 @@ class TLClass {
     bool isSynchronous;
 }
 
+class TLJson {
+    TLClass[] tl_classes;
+}
+
 class TLScheme2Json {
     private string scheme;
     private TLClass[] classes;
@@ -93,15 +97,17 @@ class TLScheme2Json {
 
     string toJson() {
         import asdf : serializeToJsonPretty;
-        return this.classList.serializeToJsonPretty();
+        auto tljson = new TLJson();
+        tljson.tl_classes = this.classList;
+        return tljson.serializeToJsonPretty();
     }
 
-    void parseType(ref string* lineptr, bool isFunction) {
+    private void parseType(ref string* lineptr, bool isFunction) {
         auto tlClass = implParse(lineptr, isFunction);
         this.classList ~= tlClass;
     }
 
-    void parseClass(string line, bool isFunction) {
+    private void parseClass(string line, bool isFunction) {
         import std.array : split;
         import std.array : replace;
         import std.string : strip;
@@ -115,7 +121,7 @@ class TLScheme2Json {
         this.classList ~= tlClass;
     }
 
-    TLClass implParse(ref string* lineptr, bool isFunction) {
+    private TLClass implParse(ref string* lineptr, bool isFunction) {
         import std.array : empty;
         import std.array : split;
         import std.array : join;
